@@ -608,7 +608,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$TOOLKIT_DIR$\config\lnkstm8l151g4.icf</state>
+          <state>$TOOLKIT_DIR$\config\lnkstm8l151g6.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
