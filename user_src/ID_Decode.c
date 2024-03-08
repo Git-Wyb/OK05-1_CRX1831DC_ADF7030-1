@@ -742,7 +742,8 @@ void Freq_Scanning(void)
 			}
 	
 			ADF7030_Change_Channel();
-			ADF7030Init();	   //ďż˝ďż˝Ćľďż˝ďż˝Ęźďż˝ďż˝ 
+			ADF7030Init_NoReset();
+            //ADF7030Init();	   //ďż˝ďż˝Ćľďż˝ďż˝Ęźďż˝ďż˝ 
 	
 			if(Radio_Date_Type==1)
 			  TIMER18ms = 18;
