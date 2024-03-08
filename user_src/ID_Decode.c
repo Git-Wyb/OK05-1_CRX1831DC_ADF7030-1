@@ -6,18 +6,18 @@
 /*  DESCRIPTION :                                                      */
 /*  Mark        :ver 1.0                                               */
 /***********************************************************************/
-#include <iostm8l151g4.h> // CPU鍨嬪彿
-#include "Pin_define.h"   // 绠¤剼瀹氫箟
-#include "initial.h"      // 鍒濆鍖? 棰勫畾涔?
-#include "ram.h"          // RAM瀹氫箟
+#include <iostm8l151g4.h> // CPU暮聻聥暮聫藝
+#include "Pin_define.h"   // 莽沤膭膷聞職暮沤職盲拧聣
+#include "initial.h"      // 暮聢聺暮搂聥暮聦? 茅藰聞暮沤職盲拧?
+#include "ram.h"          // RAM暮沤職盲拧聣
 #include "ID_Decode.h"
 #include "eeprom.h" // eeprom
 #include "uart.h"   // uart
 #include "ADF7030_1.h"
 //void EXIT_init(void)
 //{
-//    EXTI_CR1 = 0x20;          //PORT B2  鐨勪腑鏂Е鍙戜綅
-//    ADF7021_DATA_CLK_CR2 = 1; //浣胯兘璇/O鍙ｄ腑鏂? PA1
+//    EXTI_CR1 = 0x20;          //PORT B2  莽職聞盲赂颅膰聳颅膷搂艢暮聫聭盲藵聧
+//    ADF7021_DATA_CLK_CR2 = 1; //盲藵偶膷聝藵膷呕慕I/O暮聫艁盲赂颅膰聳? PA1
 //    //   EXTI_CR2=0X00;
 //    //   PIN_PD7_CR2=1;
 //}
@@ -84,7 +84,7 @@ void ID_Decode_IDCheck(void)
             eeprom_IDcheck();
             if ((FLAG_ID_Erase_Login == 1) || (FLAG_ID_Login == 1) ||(FLAG_ID_SCX1801_Login==1))
             {
-                if ((FLAG_ID_Login_OK == 0) && (DATA_Packet_Contro_buf != 0x40) && (DATA_Packet_ID != 0)&&(Radio_Date_Type_bak==1)) //2015.4.1淇 鍦ㄧ櫥褰曟ā寮忎笅 涓嶅厑璁歌嚜鍔ㄩ?佷俊鐧诲綍锛屽彧鍏佽鎵嬪姩閫佷俊鐧诲綍
+                if ((FLAG_ID_Login_OK == 0) && (DATA_Packet_Contro_buf != 0x40) && (DATA_Packet_ID != 0)&&(Radio_Date_Type_bak==1)) //2015.4.1盲偶沤膰颅艁 暮聹篓莽聶钮暮藵聲膰篓膭暮藕聫盲赂聥 盲赂聧暮聟聛膷沤赂膷聡艦暮聤篓茅?聛盲偶膭莽聶钮暮藵聲膹藕聦暮聫艦暮聟聛膷沤赂膰聣聥暮聤篓茅聙聛盲偶膭莽聶钮暮藵聲
                 {
                     if ((FLAG_ID_Erase_Login == 1) || (((FLAG_ID_Login == 1) ||(FLAG_ID_SCX1801_Login==1))&&(DATA_Packet_ID != 0xFFFFFE)))
                     	{
@@ -99,7 +99,7 @@ void ID_Decode_IDCheck(void)
 			    if(Radio_Date_Type_bak==1)
 			    {
 		                if (DATA_Packet_ID == 0xFFFFFE)
-		                    DATA_Packet_Control = DATA_Packet_Contro_buf; //2015.3.24淇 Control缂撳瓨璧?ID鍒ゆ柇鏄惁瀛︿範杩囧悗鎵嶈兘浣跨敤
+		                    DATA_Packet_Control = DATA_Packet_Contro_buf; //2015.3.24盲偶沤膰颅艁 Control莽藕聯暮颅聵膷木?ID暮聢陇膰聳颅膰聵呕暮聬艢暮颅艢盲拧聽膷偶聡暮聬聨膰聣聧膷聝藵盲藵偶莽聰篓
 		                                                                 
 		                if ((SPI_Receive_DataForC[1] & 0x0000FFFF) == 0x5556)
 		                {
@@ -110,7 +110,7 @@ void ID_Decode_IDCheck(void)
 		                    {
 		                        eeprom_IDcheck();
 		                        if (DATA_Packet_Contro_buf == 0xFF)
-		                        { //2015.4.2淇  閫佷俊鍣ㄦ梺杈圭殑鐧诲綍閿?杩藉姞鐧诲綍涓嶈
+		                        { //2015.4.2盲偶沤膰颅艁  茅聙聛盲偶膭暮聶篓膰聴聛膷啪拧莽職聞莽聶钮暮藵聲茅聰?膷偶藵暮聤聽莽聶钮暮藵聲盲赂聧膷膭聦
 		                            if (FLAG_IDCheck_OK == 1)
 		                                FLAG_IDCheck_OK = 0;
                                     else if (ID_DATA_PCS < ID_Max_PCS)
@@ -130,9 +130,11 @@ void ID_Decode_IDCheck(void)
                                         {
                                             ID_SCX1801_DATA = 0;
                                             ID_SCX1801_EEPROM_write(0x00);
-                                            if (ID_Receiver_DATA[0] != 0)
+                                            //if (ID_Receiver_DATA[0] != 0)
+                                            if (ID_Receiver_DATA_READ(ID_Receiver_DATA[0]) != 0)
                                             {
-                                                ID_SCX1801_DATA = ID_Receiver_DATA[0];
+                                                //ID_SCX1801_DATA = ID_Receiver_DATA[0];
+                                                ID_SCX1801_DATA = ID_Receiver_DATA_READ(ID_Receiver_DATA[0]);
                                                 ID_SCX1801_EEPROM_write(ID_SCX1801_DATA);
                                                 Delete_GeneralID_EEPROM(ID_SCX1801_DATA);
                                             }
@@ -164,8 +166,8 @@ void ID_Decode_IDCheck(void)
 		                        FG_auto_out = 0;
 		                        TIME_auto_close = 0;
 		                        FG_auto_open_time = 0;
-		                        if (FG_auto_manual_mode == 1)      //Manual_override_TIMER=13500;   //2鍒?0绉掕嚜鍔ㄦ棤鏁?
-		                            Manual_override_TIMER = 24480; //4鍒?0绉掕嚜鍔ㄦ棤鏁?
+		                        if (FG_auto_manual_mode == 1)      //Manual_override_TIMER=13500;   //2暮聢?0莽搂聮膷聡艦暮聤篓膰聴聽膰聲?
+		                            Manual_override_TIMER = 24480; //4暮聢?0莽搂聮膷聡艦暮聤篓膰聴聽膰聲?
 		                        if ((DATA_Packet_Control & 0x14) == 0x14)
 		                        {
 		                            if (TIMER1s == 0)
@@ -241,8 +243,8 @@ void Signal_DATA_Decode(UINT8 NUM_Type)
 	        LCDUpdateIDFlag = 1;
 	        DATA_Packet_ID = (data_NRZ[1] & 0x00FF) * 65536 + data_NRZ[0];
 	        if (DATA_Packet_ID == 0)
-	            FLAG_Signal_DATA_OK = 0;                          //2014.3.21杩藉姞  涓嶅厑璁镐娇鐢↖D=0
-	        DATA_Packet_Contro_buf = (data_NRZ[1] & 0xFF00) >> 8; //2015.3.24淇 Control缂撳瓨璧?ID鍒ゆ柇鏄惁瀛︿範杩囧悗鎵嶈兘浣?
+	            FLAG_Signal_DATA_OK = 0;                          //2014.3.21膷偶藵暮聤聽  盲赂聧暮聟聛膷沤赂盲藵偶莽聰篓ID=0
+	        DATA_Packet_Contro_buf = (data_NRZ[1] & 0xFF00) >> 8; //2015.3.24盲偶沤膰颅艁 Control莽藕聯暮颅聵膷木?ID暮聢陇膰聳颅膰聵呕暮聬艢暮颅艢盲拧聽膷偶聡暮聬聨膰聣聧膷聝藵盲藵?
 	    }
 	    else
 	        FLAG_Signal_DATA_OK = 0;
@@ -255,14 +257,26 @@ void Signal_DATA_Decode(UINT8 NUM_Type)
 	        LCDUpdateIDFlag = 1;
 	        DATA_Packet_ID = (data_NRZ[1] & 0x00FF) * 65536 + data_NRZ[0];
 	        if (DATA_Packet_ID == 0)
-	            FLAG_Signal_DATA_OK = 0;                          //2014.3.21杩藉姞  涓嶅厑璁镐娇鐢↖D=0
-	        Struct_DATA_Packet_Contro_buf.Fno_Type.byte = (data_NRZ[1] & 0xFF00) >> 8; //2015.3.24淇 Control缂撳瓨璧?ID鍒ゆ柇鏄惁瀛︿範杩囧悗鎵嶈兘浣?
+	            FLAG_Signal_DATA_OK = 0;                          //2014.3.21膷偶藵暮聤聽  盲赂聧暮聟聛膷沤赂盲藵偶莽聰篓ID=0
+	        Struct_DATA_Packet_Contro_buf.Fno_Type.byte = (data_NRZ[1] & 0xFF00) >> 8; //2015.3.24盲偶沤膰颅艁 Control莽藕聯暮颅聵膷木?ID暮聢陇膰聳颅膰聵呕暮聬艢暮颅艢盲拧聽膷偶聡暮聬聨膰聣聧膷聝藵盲藵?
             for (i = 0; i < 4; i++)
 				Struct_DATA_Packet_Contro_buf.data[i].ui=data_NRZ[i+2];
 	    }
 	    else
 	        FLAG_Signal_DATA_OK = 0;	
 	}
+}
+
+u32 ID_Receiver_DATA_READ(u8 *address)
+{
+    uni_rom_id xn;
+
+    xn.IDB[0] = 0;
+    xn.IDB[1] = address[0];
+    xn.IDB[2] = address[1];
+    xn.IDB[3] = address[2];
+
+    return xn.IDL;
 }
 
 void eeprom_IDcheck(void)
@@ -279,14 +293,15 @@ void eeprom_IDcheck(void)
 				i = 0; 
                 do
 				{
-					if (ID_Receiver_DATA[i] == DATA_Packet_ID)
+					//if (ID_Receiver_DATA[i] == DATA_Packet_ID)
+                    if (ID_Receiver_DATA_READ(ID_Receiver_DATA[i]) == DATA_Packet_ID)
 					{
 						INquiry = i;
 						i = ID_DATA_PCS;
 						FLAG_IDCheck_OK = 1;
 						if(Radio_Date_Type_bak==1)DATA_Packet_Control = DATA_Packet_Contro_buf;
 						else if(Radio_Date_Type_bak==2)Struct_DATA_Packet_Contro=Struct_DATA_Packet_Contro_buf;
-					} //2015.3.24ä¿®æ­£ Controlç¼“å­˜èµ?IDåˆ¤æ–­æ˜¯å¦å­¦ä¹ è¿‡åŽæ‰èƒ½ä½¿ç”¨
+					} //2015.3.24聛0聤1聛0聠7聛0聟3聛0聤3聛0聟2聛0聞5 Control聛0聤4聛0聠4膭掳聛0聤2聛0聟2聛0拧0篓篓聛0聟8?ID聛0聤2聛0藝3膭膷聛0聤3篓C聛0聟2聛0聤3聛0拧0聛0聟4聛0聤2聛0聜6聛0聞7聛0聤2聛0聟2聛0聞7聛0聤1聛0聠1聛0聞2篓篓聛0聠7聛6艢0聛0聤2聛0聜6聛0聴5聛0聤3膭毛聛0聜3篓篓聛0聶6聛0聠5聛0聤1聛0聠5聛0聠7聛0聤4膭膮膭搂
                     else if (DATA_Packet_ID == ID_SCX1801_DATA)
                     {
                         i = ID_DATA_PCS;
@@ -298,7 +313,7 @@ void eeprom_IDcheck(void)
 						i = ID_DATA_PCS;
 						FLAG_IDCheck_OK = 0;
 						DATA_Packet_Control = DATA_Packet_Contro_buf;
-					} //è¿½åŠ å¤šæ¬¡IDç™»å½•
+					} //篓篓聛0聠7聛0聠5聛0聤2聛0聰7聛0聞2聛0聤2膭膷聛0聰8聛0聤3聛0聟1聛0聞3ID聛0聤4聛6啪4聛0聠3聛0聤2聛0聠5聛6艢1
                     i++;
                 } while (i < ID_DATA_PCS);
         }
@@ -310,20 +325,21 @@ void eeprom_IDcheck(void)
 #else
 			for (i = 0; i < ID_DATA_PCS; i++)
 			{
-				if (ID_Receiver_DATA[i] == DATA_Packet_ID)
+				//if (ID_Receiver_DATA[i] == DATA_Packet_ID)
+                if (ID_Receiver_DATA_READ(ID_Receiver_DATA[i]) == DATA_Packet_ID)
 				{
 					INquiry = i;
 					i = ID_DATA_PCS;
 					FLAG_IDCheck_OK = 1;
 					if(Radio_Date_Type_bak==1){DATA_Packet_Control = DATA_Packet_Contro_buf;ID_SCX1801_DATA=DATA_Packet_ID;}
 					else if(Radio_Date_Type_bak==2){Struct_DATA_Packet_Contro=Struct_DATA_Packet_Contro_buf;ID_SCX1801_DATA=DATA_Packet_ID;}
-				} //2015.3.24ä¿®æ­£ Controlç¼“å­˜èµ?IDåˆ¤æ–­æ˜¯å¦å­¦ä¹ è¿‡åŽæ‰èƒ½ä½¿ç”¨
+				} //2015.3.24聛0聤1聛0聠7聛0聟3聛0聤3聛0聟2聛0聞5 Control聛0聤4聛0聠4膭掳聛0聤2聛0聟2聛0拧0篓篓聛0聟8?ID聛0聤2聛0藝3膭膷聛0聤3篓C聛0聟2聛0聤3聛0拧0聛0聟4聛0聤2聛0聜6聛0聞7聛0聤2聛0聟2聛0聞7聛0聤1聛0聠1聛0聞2篓篓聛0聠7聛6艢0聛0聤2聛0聜6聛0聴5聛0聤3膭毛聛0聜3篓篓聛0聶6聛0聠5聛0聤1聛0聠5聛0聠7聛0聤4膭膮膭搂
 				if ((FLAG_ID_Erase_Login == 1) && (FLAG_ID_Erase_Login_PCS == 1))
 				{
 					i = ID_DATA_PCS;
 					FLAG_IDCheck_OK = 0;
 					DATA_Packet_Control = DATA_Packet_Contro_buf;
-				} //è¿½åŠ å¤šæ¬¡IDç™»å½•
+				} //篓篓聛0聠7聛0聠5聛0聤2聛0聰7聛0聞2聛0聤2膭膷聛0聰8聛0聤3聛0聟1聛0聞3ID聛0聤4聛6啪4聛0聠3聛0聤2聛0聠5聛6艢1
 			}
 	
 #endif	
@@ -331,7 +347,7 @@ void eeprom_IDcheck(void)
 
 }
 /*
-   time_beepON銆乼ime_beepOFF鍗曚綅鏃堕棿涓?0.4333333ms
+   time_beepON膬聙聛time_beepOFF暮聧聲盲藵聧膰聴艣茅聴麓盲赂?0.4333333ms
 */
 void BEEP_Module(UINT16 time_beepON, UINT16 time_beepOFF)
 {
@@ -339,7 +355,7 @@ void BEEP_Module(UINT16 time_beepON, UINT16 time_beepOFF)
 
 	for (i = 0; i < time_beepON; i++)
 	{
-		//Receiver_Buzzer=!Receiver_Buzzer;   //铚傞福鍣ㄩ鐜?.08KHZ
+		//Receiver_Buzzer=!Receiver_Buzzer;   //膷聹聜茅赂艁暮聶篓茅藰聭莽聨?.08KHZ
 		if (FG_beep_on == 0)
 		{
 			FG_beep_on = 1;
@@ -353,7 +369,7 @@ void BEEP_Module(UINT16 time_beepON, UINT16 time_beepOFF)
 	}
 	for (i = 0; i < time_beepOFF; i++)
 	{
-		// Receiver_Buzzer=0;	//铚傞福鍣ㄩ鐜?.08KHZ
+		// Receiver_Buzzer=0;	//膷聹聜茅赂艁暮聶篓茅藰聭莽聨?.08KHZ
 		if (FG_beep_off == 0)
 		{
 			FG_beep_off = 1;
@@ -464,7 +480,7 @@ void ID_Decode_OUT(void)
                 Receiver_BEEP();
             }
             break;
-        case 0x40: //鑷姩閫佷俊
+        case 0x40: //膷聡艦暮聤篓茅聙聛盲偶膭
             if ((FG_auto_out == 0) && (Manual_override_TIMER == 0)&&(Radio_Date_Type_bak==1))
             {
                 Receiver_LED_OUT = 1;
@@ -492,14 +508,14 @@ void ID_Decode_OUT(void)
         case 0x01: //VENT
             Receiver_LED_OUT = 1;
             if (Receiver_vent == 0)
-            { //鍙椾俊鏈烘崲姘旇仈鍔∣FF
+            { //暮聫聴盲偶膭膰聹艧膰聧藰膰掳聰膷聛聰暮聤篓OFF
                 Receiver_OUT_STOP = FG_NOT_allow_out;
                 Receiver_OUT_VENT = FG_NOT_allow_out;
                 Receiver_OUT_OPEN = FG_allow_out;
                 Receiver_OUT_CLOSE = FG_allow_out;
             }
             else
-            { //鍙椾俊鏈烘崲姘旇仈鍔∣N
+            { //暮聫聴盲偶膭膰聹艧膰聧藰膰掳聰膷聛聰暮聤篓ON
                 Receiver_OUT_STOP = FG_NOT_allow_out;
                 Receiver_OUT_OPEN = FG_NOT_allow_out;
                 Receiver_OUT_CLOSE = FG_NOT_allow_out;
@@ -580,7 +596,7 @@ void ID_Decode_OUT(void)
             break;
         }
         if(Radio_Date_Type_bak==2)
-		{             //429M   鍗婂紑淇″彿/鍗婇棴
+		{             //429M   暮聧聤暮藕聙盲偶膭暮聫藝/暮聧聤茅聴颅
                     if(((DATA_Packet_Control&0xDF)>0x80)&&((DATA_Packet_Control&0x20)==0x00))
 						{
                                 if((DATA_Packet_Control&0xDF)<0xC0){
@@ -615,7 +631,7 @@ void ID_Decode_OUT(void)
 		if((FLAG__Semi_open_T==1)||(FLAG__Semi_close_T==1)){
 					 if((DATA_Packet_Control==0x02)||(DATA_Packet_Control==0x04)||(DATA_Packet_Control==0x08)||(DATA_Packet_Control==0x01)||(DATA_Packet_Control==0x20)||(DATA_Packet_Control==0x40)
 					  ||(DATA_Packet_Control==0x9)||(DATA_Packet_Control==0x03)||(DATA_Packet_Control==0x0C)||(DATA_Packet_Control==0x06)||(DATA_Packet_Control==0x0A)){
-						 //2015.12.29杩藉姞锛屽湪鍗婂紑銆佸崐闂姩浣滀腑锛岄?佷俊鏈猴紙寮?+闂級淇″彿锛岃鍋滄缁х數鍣ㄤ笉鍔ㄤ綔
+						 //2015.12.29膷偶藵暮聤聽膹藕聦暮聹篓暮聧聤暮藕聙膬聙聛暮聧聤茅聴颅暮聤篓盲藵聹盲赂颅膹藕聦茅?聛盲偶膭膰聹艧膹藕聢暮藕?+茅聴颅膹藕聣盲偶膭暮聫藝膹藕聦膷沤艩暮聛聹膰颅藰莽钮搂莽聰木暮聶篓盲赂聧暮聤篓盲藵聹
 						 FLAG__Semi_open_T=0;FLAG__Semi_close_T=0;TIMER250ms_STOP=0;
 					 }
 		 }
@@ -635,7 +651,7 @@ void ID_Decode_OUT(void)
     else
     {
         //           if(FLAG_APP_Reply==1){FLAG_APP_Reply=0;ID_data.IDL=DATA_Packet_ID;Control_code=HA_Status;FLAG_HA_START=1;}
-        //           if(FLAG_426MHz_Reply==1){FLAG_426MHz_Reply=0;ID_data.IDL=DATA_Packet_ID;Control_code=HA_Status+4;FLAG_HA_START=1;}   //鍙椾俊鍣ㄨ嚜鍔ㄥ彂閫丠A鐘舵?佺爜涓哄疄闄匟A鐮?4
+        //           if(FLAG_426MHz_Reply==1){FLAG_426MHz_Reply=0;ID_data.IDL=DATA_Packet_ID;Control_code=HA_Status+4;FLAG_HA_START=1;}   //暮聫聴盲偶膭暮聶篓膷聡艦暮聤篓暮聫聭茅聙聛HA莽聤艣膰?聛莽聽聛盲赂艧暮沤聻茅聶聟HA莽聽?4
         if ((FG_auto_out == 1) && (TIME_auto_out == 0))
         {
             FG_auto_out = 0;
@@ -677,11 +693,11 @@ void ID_Decode_OUT(void)
             Receiver_LED_OUT = 0;
 
                if((FLAG__Semi_open_T==1)||(FLAG__Semi_close_T==1)){
-//                   if(HA_Status==0x83)TIMER250ms_STOP=0;     //2015.12.29杩藉姞锛屽湪鍗婂紑銆佸崐闂姩浣滀腑锛屽彈淇℃満鐨勭姸鎬佸彉鎴愬紓甯?1鐨勬椂鍊欙紝璁╁仠姝㈢户鐢靛櫒涓嶅姩浣?
+//                   if(HA_Status==0x83)TIMER250ms_STOP=0;     //2015.12.29膷偶藵暮聤聽膹藕聦暮聹篓暮聧聤暮藕聙膬聙聛暮聧聤茅聴颅暮聤篓盲藵聹盲赂颅膹藕聦暮聫聴盲偶膭膰聹艧莽職聞莽聤艣膰聙聛暮聫聵膰聢聬暮藕聜暮赂?1莽職聞膰聴艣暮聙聶膹藕聦膷沤艩暮聛聹膰颅藰莽钮搂莽聰木暮聶篓盲赂聧暮聤篓盲藵?
                    if((TIMER250ms_STOP<1000)&&(TIMER250ms_STOP>0)){Receiver_OUT_STOP=FG_allow_out;Receiver_LED_OUT=1;}
                    else if(TIMER250ms_STOP==0){Receiver_OUT_STOP=FG_NOT_allow_out;FLAG__Semi_open_T=0;FLAG__Semi_close_T=0;}
                }
-               else if((TIMER250ms_STOP==0)&&(TIME_auto_close==0)){Receiver_OUT_STOP=FG_NOT_allow_out;FG_OUT_OPEN_CLOSE=0;}    //2015.3.23淇敼		
+               else if((TIMER250ms_STOP==0)&&(TIME_auto_close==0)){Receiver_OUT_STOP=FG_NOT_allow_out;FG_OUT_OPEN_CLOSE=0;}    //2015.3.23盲偶沤膰聰拧		
         
         if (FG_auto_open_time == 1)
         {
@@ -708,7 +724,7 @@ void Freq_Scanning(void)
 /*
 			if ((Flag_FREQ_Scan == 0)&&((FLAG_ID_Erase_Login == 1) || (FLAG_ID_Login == 1) ||(FLAG_ID_SCX1801_Login==1)||
 										  ((FLAG_ID_Erase_Login==0)&&(FLAG_ID_Login==0)&&(FLAG_ID_SCX1801_Login==0)&&(PROFILE_CH_FREQ_32bit_200002EC != 426075000)))
-			   )  //锟斤拷锟斤拷模式时锟斤拷锟斤拷锟斤拷426.075MHz锟斤拷锟脚号ｏ拷只锟斤拷锟节碉拷录模式时锟脚斤拷锟杰★拷
+			   )  //膹偶藵膹偶藵膹偶藵膹偶藵脛艁臉藵臉膮膹偶藵膹偶藵膹偶藵膹偶藵膹偶藵膹偶藵426.075MHz膹偶藵膹偶藵膹偶藵墓艧墓艁膹偶藵脰钮膹偶藵膹偶藵膹偶藵脷木膹偶藵脗藕脛艁臉藵臉膮膹偶藵墓藵膹偶藵膹偶藵脺膭膹偶藵
 */
 			{
 				if (ADF7030_Read_RESIGER(0x4000380C, 1, 0) != 0)
@@ -726,7 +742,7 @@ void Freq_Scanning(void)
 			}
 	
 			ADF7030_Change_Channel();
-			ADF7030Init();	   //锟斤拷频锟斤拷始锟斤拷 
+			ADF7030Init();	   //膹偶藵膹偶藵膯木膹偶藵膹偶藵臉藕膹偶藵膹偶藵 
 	
 			if(Radio_Date_Type==1)
 			  TIMER18ms = 18;

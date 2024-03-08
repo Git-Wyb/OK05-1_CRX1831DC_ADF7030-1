@@ -201,6 +201,16 @@ void eeprom_save(void)
         WriteByteToFLASH(addr_eeprom_sys + i, eeprom_sys_buff);
     LockFlash(UNLOCK_EEPROM_TYPE);
 }
+void ID_Receiver_DATA_WRITE(u8 *address, u32 Data)
+{
+    uni_rom_id xn;
+
+    xn.IDL = Data;
+    address[0] = xn.IDB[1];
+    address[1] = xn.IDB[2];
+    address[2] = xn.IDB[3];
+}
+
 void eeprom_sys_load(void)
 {
     //unsigned char	i;
@@ -224,7 +234,8 @@ void eeprom_sys_load(void)
 
 
     for (i = 0; i < 256; i++)
-        ID_Receiver_DATA[i] = 0; //ID_Receiver_DATA[ID_DATA_PCS]=0;
+        //ID_Receiver_DATA[i] = 0;
+        ID_Receiver_DATA_WRITE(ID_Receiver_DATA[i], 0);
     xm[0] = ReadByteEEPROM(addr_eeprom_sys + 0x3FE);
     xm[1] = ReadByteEEPROM(addr_eeprom_sys + 0x3FF);
     ID_DATA_PCS = xm[0] * 256 + xm[1];
@@ -249,7 +260,8 @@ void eeprom_sys_load(void)
         if ((xn.IDL == 0) || (xn.IDL == 0xFFFFFF))
             q++;
         else
-            ID_Receiver_DATA[p++] = xn.IDL;
+            //ID_Receiver_DATA[p++] = xn.IDL;
+            ID_Receiver_DATA_WRITE(ID_Receiver_DATA[p++], xn.IDL);
         if (q > 260)
             break;
         ClearWDT(); // Service the WDT
@@ -283,7 +295,8 @@ void ALL_ID_EEPROM_Erase(void)
 	
     for (i = 0; i < 256; i++)
     {
-        ID_Receiver_DATA[i] = 0;
+        //ID_Receiver_DATA[i] = 0;
+        ID_Receiver_DATA_WRITE(ID_Receiver_DATA[i], 0);
         m2 = 3 * i;
         UnlockFlash(UNLOCK_EEPROM_TYPE);
         WriteByteToFLASH(addr_eeprom_sys + m2, xm[0]);
@@ -309,7 +322,8 @@ void ID_EEPROM_write(void)
     WriteByteToFLASH(addr_eeprom_sys + 0x3FF, xm[0]);
     LockFlash(UNLOCK_EEPROM_TYPE);
 
-    ID_Receiver_DATA[ID_DATA_PCS - 1] = ID_Receiver_Login;
+    //ID_Receiver_DATA[ID_DATA_PCS - 1] = ID_Receiver_Login;
+    ID_Receiver_DATA_WRITE(ID_Receiver_DATA[ID_DATA_PCS - 1], ID_Receiver_Login);
     xn.IDL = ID_Receiver_Login;
 
     for (i = 0; i < 256; i++)
@@ -375,11 +389,13 @@ void Delete_GeneralID_EEPROM(u32 id)
     original_pcs = ID_DATA_PCS;
     for (i = 0; i < ID_DATA_PCS; i++)
     {
-		if ((ID_Receiver_DATA[i] == id)&&(id!=0xFFFFFE)&&(id!=0))
+		//if ((ID_Receiver_DATA[i] == id)&&(id!=0xFFFFFE)&&(id!=0))
+        if ((ID_Receiver_DATA_READ(ID_Receiver_DATA[i]) == id)&&(id!=0xFFFFFE)&&(id!=0))
 		{
             for (j = i; j < ID_DATA_PCS; j++)
             {
-                ID_Receiver_DATA[j] = ID_Receiver_DATA[j+1];
+                //ID_Receiver_DATA[j] = ID_Receiver_DATA[j+1];
+                ID_Receiver_DATA_WRITE(ID_Receiver_DATA[j],ID_Receiver_DATA_READ(ID_Receiver_DATA[j+1]));
                 ClearWDT(); // Service the WDT
             }
             ID_DATA_PCS--;
@@ -401,7 +417,8 @@ void Delete_GeneralID_EEPROM(u32 id)
 
     for (i = 0; i < original_pcs; i++)
     {
-        xn.IDL = ID_Receiver_DATA[i];
+        //xn.IDL = ID_Receiver_DATA[i];
+        xn.IDL = ID_Receiver_DATA_READ(ID_Receiver_DATA[i]);
         xm[0] = xn.IDB[1];
         xm[1] = xn.IDB[2];
         xm[2] = xn.IDB[3];
@@ -477,7 +494,8 @@ void ID_EEPROM_write_0x00(void)
         if ((xn.IDL == 0) || (xn.IDL == 0xFFFFFF))
             q++;
         else
-            ID_Receiver_DATA[p++] = xn.IDL;
+            //ID_Receiver_DATA[p++] = xn.IDL;
+            ID_Receiver_DATA_WRITE(ID_Receiver_DATA[p++], xn.IDL);
         if (q > 260)
             break;
         ClearWDT(); // Service the WDT

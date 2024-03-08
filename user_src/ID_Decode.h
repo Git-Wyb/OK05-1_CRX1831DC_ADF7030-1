@@ -19,7 +19,7 @@ void ID_Decode_OUT(void);
 void Receiver_BEEP(void);
 void TEST_beep(void);
 void BEEP_Module(UINT16 time_beepON, UINT16 time_beepOFF);
-
+u32 ID_Receiver_DATA_READ(u8 *address);
 
 
 void Freq_Scanning(void);
