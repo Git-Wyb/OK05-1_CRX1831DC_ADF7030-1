@@ -20,7 +20,7 @@
         
         
       <ColumnWidth0>20</ColumnWidth0><ColumnWidth1>712</ColumnWidth1><ColumnWidth2>190</ColumnWidth2><ColumnWidth3>47</ColumnWidth3></Build>
-    <TerminalIO/><Debug-Log><ColumnWidth0>20</ColumnWidth0><ColumnWidth1>950</ColumnWidth1></Debug-Log></Static>
+    <TerminalIO/><Debug-Log><ColumnWidth0>20</ColumnWidth0><ColumnWidth1>950</ColumnWidth1></Debug-Log><Find-in-Files><ColumnWidth0>569</ColumnWidth0><ColumnWidth1>94</ColumnWidth1><ColumnWidth2>854</ColumnWidth2><ColumnWidth3>379</ColumnWidth3></Find-in-Files></Static>
     <Windows>
       
       
@@ -44,7 +44,7 @@
             <Factory>Build</Factory>
             <Session/>
           </Tab>
-        <Tab><Identity>TabID-22384-9304</Identity><TabName>Debug Log</TabName><Factory>Debug-Log</Factory><Session/></Tab></Tabs>
+        <Tab><Identity>TabID-22384-9304</Identity><TabName>Debug Log</TabName><Factory>Debug-Log</Factory><Session/></Tab><Tab><Identity>TabID-20315-28912</Identity><TabName>Find in Files</TabName><Factory>Find-in-Files</Factory><Session/></Tab></Tabs>
         
       <SelectedTab>0</SelectedTab></Wnd3></Windows>
     <Editor>
@@ -52,7 +52,7 @@
       
       
       
-    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\user_src\main.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>77</YPos2><SelStart2>3428</SelStart2><SelEnd2>3428</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\user_src\Initial.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>221</YPos2><SelStart2>9342</SelStart2><SelEnd2>9342</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\user_src\ADF7030_1.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>661</YPos2><SelStart2>24913</SelStart2><SelEnd2>24913</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\user_src\ID_Decode.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>702</YPos2><SelStart2>26638</SelStart2><SelEnd2>26638</SelEnd2></Tab><ActiveTab>3</ActiveTab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\user_src\main.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>77</YPos2><SelStart2>3361</SelStart2><SelEnd2>3361</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\user_src\Initial.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>221</YPos2><SelStart2>9342</SelStart2><SelEnd2>9342</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\user_src\ADF7030_1.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>1289</YPos2><SelStart2>46720</SelStart2><SelEnd2>46720</SelEnd2></Tab><ActiveTab>2</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\user_src\ID_Decode.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>702</YPos2><SelStart2>26707</SelStart2><SelEnd2>26707</SelEnd2></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
     <Positions>
       
       

@@ -1,0 +1,1 @@
+git@github.com:Git-Wyb/OK05-1_CRX1831DC_ADF7030-1.git
