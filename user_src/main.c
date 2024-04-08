@@ -50,9 +50,9 @@
 
 void main(void)
 {
-    _DI();             // 关全�?中断	
+    _DI();             // 关全�?中断
     RAM_clean();       // 清除RAM
-    //OTA_bootloader_enable();  //IAP OTA    
+    //OTA_bootloader_enable();  //IAP OTA
     WDT_init();        //看门�?
     VHF_GPIO_INIT();   //IO初始�?
     SysClock_Init();   //系统时钟初始�?
@@ -61,13 +61,13 @@ void main(void)
     TIM4_Init();       // 定时�?
     beep_init();       // 蜂鸣�?
     ClearWDT();        // Service the WDT
-	
+
     PROFILE_CH_FREQ_32bit_200002EC = 426075000;
-    PROFILE_RADIO_AFC_CFG1_32bit_2000031C = 0x0005005A;  
+    PROFILE_RADIO_AFC_CFG1_32bit_2000031C = 0x0005005A;
     PROFILE_RADIO_DATA_RATE_32bit_200002FC = 0x6400000C;
-    //PROFILE_GENERIC_PKT_FRAME_CFG1_32bit_20000500 = 0x0000100C;  
+    //PROFILE_GENERIC_PKT_FRAME_CFG1_32bit_20000500 = 0x0000100C;
     ADF7030Init();     //射频初始�?
-    
+
     UART1_INIT();      // UART1 for PC Software
     _EI();             // 允许中断
     TIME_power_led=500;
