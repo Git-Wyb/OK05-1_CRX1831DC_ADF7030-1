@@ -4,7 +4,7 @@
 #include <stdbool.h> /* For true/false definition                      */
 //#include "initial.h"		// ?????  ?????
 #include "type_def.h"
-
+#include "ram.h"
 
 
 u8 DEF_APP_TX_freq=3;

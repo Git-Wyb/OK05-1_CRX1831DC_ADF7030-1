@@ -330,6 +330,8 @@ void KEY_GPIO_Init(void)
  * @Brief    :
  * @Version  : V1.0
 **/
+u8 x_cnt = 0;
+u8 y_cnt = 0;
 void RF_BRE_Check(void)
 {
     char errbuff[10];
@@ -350,12 +352,25 @@ void RF_BRE_Check(void)
         ADF7030_RECEIVING_FROM_POWEROFF();
     }
 
-    if (X_COUNT >= 1000)
+    if (X_COUNT >= 500)
     {
-        if (X_ERR >= 50)
-            Receiver_LED_RX = 0;
+        x_cnt++;
+        if (X_ERR >= 25)
+        {
+            //Receiver_LED_RX = 0;
+        }
         else
-            Receiver_LED_RX = 1;
+        {
+            //Receiver_LED_RX = 1;
+            y_cnt++;
+        }
+        if(x_cnt == 6)
+        {
+            if(y_cnt >= 3) Receiver_LED_RX = 1;
+            else Receiver_LED_RX = 0;
+            x_cnt = 0;
+            y_cnt = 0;
+        }
         sprintf(errbuff, "%d\r\n", X_ERR);
         //s((u8 *)errbuff);
         //for (j = 0; j < 4; j++)
@@ -363,7 +378,7 @@ void RF_BRE_Check(void)
         //        display_map_58_6(70,45,4,CacheData);
         X_ERR = 0;
         X_COUNT = 0;
-        X_ERRTimer = 1250;
+        X_ERRTimer = 3750;//1250;
     }
     if (X_ERRTimer == 0)
         Receiver_LED_RX = 0;
