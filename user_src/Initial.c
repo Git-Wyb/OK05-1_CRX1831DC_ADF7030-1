@@ -350,9 +350,9 @@ void RF_BRE_Check(void)
         ADF7030_RECEIVING_FROM_POWEROFF();
     }
 
-    if (X_COUNT >= 1000)
+    if (X_COUNT >= 500)
     {
-        if (X_ERR >= 50)
+        if (X_ERR >= 25)
             Receiver_LED_RX = 0;
         else
             Receiver_LED_RX = 1;
@@ -410,6 +410,9 @@ void RF_test_mode(void)
             FG_test_tx_off = 0;
             if (Tx_Rx_mode == 0) //发载波，无调制信�?
             {
+                Receiver_OUT_OPEN = FG_allow_out;
+                Receiver_OUT_STOP = FG_NOT_allow_out;
+                Receiver_OUT_CLOSE = FG_NOT_allow_out;
                 Receiver_LED_TX = 1;
                 FG_test_mode = 0;
                 FG_test_tx_1010 = 0;
@@ -423,6 +426,9 @@ void RF_test_mode(void)
             }
             else //发载波，有调制信�?
             {
+                Receiver_OUT_OPEN = FG_NOT_allow_out;
+                Receiver_OUT_STOP = FG_allow_out;
+                Receiver_OUT_CLOSE = FG_NOT_allow_out;
                 if (TIMER1s == 0)
                 {
                     TIMER1s = 500;
@@ -465,6 +471,9 @@ void RF_test_mode(void)
             }
             if (Tx_Rx_mode == 3) //packet usart out put BER
             {
+                Receiver_OUT_OPEN = FG_NOT_allow_out;
+                Receiver_OUT_STOP = FG_NOT_allow_out;
+                Receiver_OUT_CLOSE = FG_allow_out;
                 RF_BRE_Check();
             }
         }
@@ -476,6 +485,9 @@ void RF_test_mode(void)
         //       if(ADF7021_DATA_CLK==0)FG_test1=0;
     }
     BerExtiUnInit();
+    Receiver_OUT_OPEN = FG_NOT_allow_out;
+    Receiver_OUT_STOP = FG_NOT_allow_out;
+    Receiver_OUT_CLOSE = FG_NOT_allow_out;
     FG_test_rx = 0;
     TIMER1s = 0;
     Receiver_LED_TX = 0;
