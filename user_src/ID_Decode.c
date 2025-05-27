@@ -369,12 +369,52 @@ void BEEP_Module(UINT16 time_beepON, UINT16 time_beepOFF)
 
 }
 
+void BEEP_wait_time(UINT16 time_beepON, UINT16 time_beepOFF)
+{
+	UINT16 i;
+
+	for (i = 0; i < time_beepON; i++)
+	{
+		//Receiver_Buzzer=!Receiver_Buzzer;   //蜂鸣器频玿.08KHZ
+		if (FG_beep_on == 0)
+		{
+			FG_beep_on = 1;
+			FG_beep_off = 0;
+			//BEEP_CSR2_BEEPEN = 1;
+		}
+		Delayus(250); //80us
+		Delayus(250); //80us
+		Delayus(250); //80us
+		ClearWDT();   // Service the WDT
+	}
+	for (i = 0; i < time_beepOFF; i++)
+	{
+		// Receiver_Buzzer=0;	//蜂鸣器频玿.08KHZ
+		if (FG_beep_off == 0)
+		{
+			FG_beep_off = 1;
+			FG_beep_on = 0;
+			//BEEP_CSR2_BEEPEN = 0;
+		}
+		//Delayus(240);
+		Delayus(250); //80us
+		Delayus(250); //80us
+		Delayus(250); //80us
+		ClearWDT();   // Service the WDT
+	}
+
+}
+
 void BEEP_and_LED(void)
 {
     Receiver_LED_OUT = 1;
-    BEEP_Module(2300,0);
-    FG_beep_on = 0;
+    //BEEP_Module(2300,0);
+    //BEEP_CSR2_BEEPEN = 0;
     BEEP_CSR2_BEEPEN = 0;
+    BEEP_wait_time(2300,0);
+    BEEP_CSR2_BEEPEN = 1;
+    FG_beep_on = 0;
+
     TIME_Receiver_LED_OUT = 185;
 }
 

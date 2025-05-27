@@ -19,7 +19,7 @@ void ID_Decode_OUT(void);
 void Receiver_BEEP(void);
 void TEST_beep(void);
 void BEEP_Module(UINT16 time_beepON, UINT16 time_beepOFF);
-
+void BEEP_wait_time(UINT16 time_beepON, UINT16 time_beepOFF);
 
 
 void Freq_Scanning(void);
