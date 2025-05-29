@@ -156,6 +156,7 @@ extern u8 LED_Cache;
 #define PIN_BEEP PA_ODR_ODR0       // Output   蜂鸣器
 #define PIN_BEEP_direc PA_DDR_DDR0 // Output   蜂鸣器
 #define PIN_BEEP_CR1 PA_CR1_C10    // Output   蜂鸣器
+#define PIN_BEEP_CR2 PA_CR2_C20    // Output   蜂鸣器
 
 #define Receiver_OUT_OPEN PD_ODR_ODR3       // Output   受信机继电器OPEN  高电平有效
 #define Receiver_OUT_OPEN_direc PD_DDR_DDR3 // Output   受信机继电器OPEN  高电平有效

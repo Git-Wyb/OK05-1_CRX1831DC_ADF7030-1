@@ -47,9 +47,9 @@ void TIM4_UPD_OVF(void)
     if (U1AckTimer)
         U1AckTimer--;
     if (Time_APP_RXstart)
-      --Time_APP_RXstart;	
+      --Time_APP_RXstart;
     if(Time_APP_blank_TX)
-       --Time_APP_blank_TX;  	
+       --Time_APP_blank_TX;
     if (Flag_RSSI_Read_Timer)
         Flag_RSSI_Read_Timer--;
     if (X_ERRTimer)
@@ -58,4 +58,31 @@ void TIM4_UPD_OVF(void)
 		--TIME_ID_SCX1801_Login;
 
     TIM4_SR1_bit.UIF = 0; // 清除中断标记
+}
+
+void TIM2_Init(void)
+{
+    TIM2_PSCR = 0x06;
+    TIM2_ARRH = 0;
+    TIM2_ARRL = 31;//31=>3.922KHz//67=>1.838KHz//45=>2.729KHz
+    TIM2_CR1 |= 0x10;//0x16;
+    TIM2_IER |= 0x01; // Timer 2 OVR interrupt
+}
+
+void TIM2_UPD_OVF(void)
+{
+    PIN_BEEP = !PIN_BEEP;
+    TIM2_SR1_bit.UIF = 0; // 清除中断标记
+}
+
+void BEEP_TIM2_ON(void)
+{
+    PIN_BEEP = 0;
+    TIM2_CR1 |= 0x01;
+}
+
+void BEEP_TIM2_OFF(void)
+{
+    PIN_BEEP = 0;
+    TIM2_CR1 &= ~0x01;
 }

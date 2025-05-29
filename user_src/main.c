@@ -59,8 +59,9 @@ void main(void)
     InitialFlashReg(); //flash EEPROM
     eeprom_sys_load(); //ID载入
     TIM4_Init();       // 定时�?
-    beep_init();       // 蜂鸣�?
+    //beep_init();       // 蜂鸣�?
     ClearWDT();        // Service the WDT
+    TIM2_Init();
 
     PROFILE_CH_FREQ_32bit_200002EC = 426075000;
     PROFILE_RADIO_AFC_CFG1_32bit_2000031C = 0x0005005A;

@@ -344,7 +344,8 @@ void BEEP_Module(UINT16 time_beepON, UINT16 time_beepOFF)
 		{
 			FG_beep_on = 1;
 			FG_beep_off = 0;
-			BEEP_CSR2_BEEPEN = 1;
+			//BEEP_CSR2_BEEPEN = 1;
+            BEEP_TIM2_ON();
 		}
 		Delayus(250); //80us
 		Delayus(250); //80us
@@ -358,7 +359,8 @@ void BEEP_Module(UINT16 time_beepON, UINT16 time_beepOFF)
 		{
 			FG_beep_off = 1;
 			FG_beep_on = 0;
-			BEEP_CSR2_BEEPEN = 0;
+			//BEEP_CSR2_BEEPEN = 0;
+            BEEP_TIM2_OFF();
 		}
 		//Delayus(240);
 		Delayus(250); //80us
@@ -374,7 +376,7 @@ void BEEP_and_LED(void)
     Receiver_LED_OUT = 1;
     BEEP_Module(2300,0);
     FG_beep_on = 0;
-    BEEP_CSR2_BEEPEN = 0;
+    //BEEP_CSR2_BEEPEN = 0;
     TIME_Receiver_LED_OUT = 185;
 }
 
@@ -398,7 +400,7 @@ void TEST_beep(void)
 		BEEP_Module(300,900);
 		BEEP_Module(300,1);
 		}
-	else if(FLAG_testBEEP==3) BEEP_CSR2_BEEPEN = 1;
+	else if(FLAG_testBEEP==3) BEEP_TIM2_ON();//BEEP_CSR2_BEEPEN = 1;
 	FLAG_testBEEP=0;
 }
 

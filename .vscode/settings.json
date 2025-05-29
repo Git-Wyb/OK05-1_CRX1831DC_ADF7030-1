@@ -15,7 +15,8 @@
         "adf7030_1.h": "c",
         "pin_define.h": "c",
         "eeprom.h": "c",
-        "uart.h": "c"
+        "uart.h": "c",
+        "*.cfg": "c"
     },
     "editor.guides.indentation": true,
 }

@@ -540,6 +540,48 @@ void ADF7030_TRANSMITTING_FROM_POWEROFF(void)
         ;
 }
 
+void ADF7030_TRANSMITTING_FROM_POWEROFF_Register(void)
+{
+    CG2214M6_USE_T;
+    while (GET_STATUE_BYTE().CMD_READY == 0)
+        ;
+    ADF7030_CHANGE_STATE(STATE_PHY_OFF);
+    while (GET_STATUE_BYTE().FW_STATUS == 0)
+        ;
+    DELAY_30U();
+    ADF7030_CHANGE_STATE(STATE_PHY_ON);
+    while (GET_STATUE_BYTE().FW_STATUS == 0)
+        ;
+    DELAY_30U();
+    ADF7030_WRITE_REGISTER_NOPOINTER_LONGADDR_OFFSET_MSB(ADF7030Cfg_pointer, CFG_SIZE(), ADDR_GENERIC_FIELDS, 8, 24);
+    WaitForADF7030_FIXED_DATA(); //等待芯片空闲/可接受CMD状�?
+    DELAY_30U();
+    ADF7030_WRITE_REGISTER_NOPOINTER_LONGADDR_OFFSET_MSB(ADF7030Cfg_pointer, CFG_SIZE(), ADDR_CHANNEL_FERQUENCY, 8, 4);
+    WaitForADF7030_FIXED_DATA(); //等待芯片空闲/可接受CMD状�?
+    DELAY_30U();
+
+    ADF7030_WRITE_REGISTER_NOPOINTER_LONGADDR_MSB(ADDR_CHANNEL_FERQUENCY, PROFILE_CH_FREQ_32bit_200002EC);
+    WaitForADF7030_FIXED_DATA(); //等待芯片空闲/可接受CMD状�?
+    DELAY_30U();
+
+	Memory_Write_Block_Pointer_Short_Address(CONST_TXPACKET_DATA_20000AF0, PNTR_CUSTOM1_ADDR, 28);
+    WaitForADF7030_FIXED_DATA(); //等待芯片空闲/可接受CMD状�?
+    DELAY_30U();
+    ADF7030_CHANGE_STATE(STATE_PHY_TX);
+    WaitForADF7030_FIXED_DATA(); //等待芯片空闲/可接受CMD状�?
+    /*   while((PORTRead(ADF7030_GPIO3_PORT)&ADF7030_GPIO3_PIN)==0)//????????
+    {
+    DELAY_30U();
+    }*/
+    DELAY_30U();
+    ADF7030_Clear_IRQ();
+    WaitForADF7030_FIXED_DATA(); //等待芯片空闲/可接受CMD状�?
+    DELAY_30U();
+    ADF7030_CHANGE_STATE(STATE_PHY_ON);
+    while (GET_STATUE_BYTE().FW_STATUS == 0)
+        ;
+}
+
 /*RECEIVE A SINGLE PACKET FROM POWER OFF*/
 void ADF7030_RECEIVING_FROM_POWEROFF(void)
 {
@@ -1344,5 +1386,57 @@ void Select_TX_frequency(void)
 
 	}
 
+void APP_TX_PACKET_Register(void)
+{
+    if(FLAG_APP_TX==1)
+	  {
+	       if(TX_Scan_step==1)
+           {
+               TX_Scan_step=2;//Select_TX_frequency();
+               Time_APP_RXstart = 1000;
+           }
+		   if(TX_Scan_step==2)
+		   {
+				if(APP_TX_freq==0)
+				{
+				    Receiver_LED_TX = 1;
+					TX_DataLoad_HighSpeed(ID_SCX1801_DATA,Last_Uart_Struct_DATA_Packet_Contro, &CONST_TXPACKET_DATA_20000AF0[0]);
+					ADF7030_TRANSMITTING_FROM_POWEROFF();
+					Time_APP_blank_TX=2;
+					APP_TX_freq=1; //1
+				}
+				else if((APP_TX_freq < DEF_APP_TX_freq)&&(ADF7030_GPIO3 == 0)&&(Time_APP_blank_TX==0))
+				{
+					 ADF7030_TRANSMITTING_FROM_POWEROFF();
+					 Time_APP_blank_TX=2;
+					APP_TX_freq++;
+				}
+				else if((APP_TX_freq==DEF_APP_TX_freq)&&(ADF7030_GPIO3 == 0)&&(Time_APP_blank_TX==0))
+				{
+					APP_TX_freq++;
+				   FLAG_APP_RXstart=1;
+				   FLAG_APP_TX=0;
+				   Time_APP_RXstart=1;
+				   Receiver_LED_TX = 0;
+				   FLAG_APP_TX_once=0;
+				}
+                else if(Time_APP_RXstart == 0)
+                {
+                   FLAG_APP_RXstart=1;
+				   FLAG_APP_TX=0;
+				   Time_APP_RXstart=1;
+				   Receiver_LED_TX = 0;
+				   FLAG_APP_TX_once=0;
+                }
+		   }
+	  }
+	  if((FLAG_APP_RXstart==1)&&(Time_APP_RXstart==0)&&(FLAG_APP_TX_fromUART_err_read==0))
+	  {
+		  FLAG_APP_RXstart=0;
+		TIMER18ms=0;
+		FLAG_APP_RX=1;
 
+		ADF7030Init();	   //��Ƶ��ʼ��
+	  }
+}
 

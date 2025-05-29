@@ -66,8 +66,8 @@ extern volatile uFLAG FLAG2;
 #define FLAG2_BYTE FLAG2.BYTE
 //------------------------------------------------
 #define FLAG_ID_SCX1801_Login FLAG2.BIT.Bit0   //用于与集中�?�信机�?�信的ID，只有一个ID
-#define FG_ID_SCX1801_Login_BEEP FLAG2.BIT.Bit1 
-#define FLAG_APP_TX_fromUART FLAG2.BIT.Bit2 
+#define FG_ID_SCX1801_Login_BEEP FLAG2.BIT.Bit1
+#define FLAG_APP_TX_fromUART FLAG2.BIT.Bit2
 #define FLAG_APP_TX_fromOUT FLAG2.BIT.Bit3
 #define FLAG_APP_TX FLAG2.BIT.Bit4
 #define FLAG_APP_RXstart FLAG2.BIT.Bit5
@@ -78,9 +78,9 @@ extern volatile uFLAG FLAG2;
 extern volatile uFLAG FLAG3;
 #define FLAG3_BYTE FLAG3.BYTE
 //------------------------------------------------
-#define Flag_ERROR_Read FLAG3.BIT.Bit0   
-//#define  FLAG3.BIT.Bit1 
-#define Flag_shutter_stopping FLAG3.BIT.Bit2 
+#define Flag_ERROR_Read FLAG3.BIT.Bit0
+//#define  FLAG3.BIT.Bit1
+#define Flag_shutter_stopping FLAG3.BIT.Bit2
 #define FLAG_APP_TX_fromUART_err_read FLAG3.BIT.Bit3
 //#define  FLAG3.BIT.Bit4
 //#define  FLAG3.BIT.Bit5
@@ -191,7 +191,7 @@ void ADF7030_TRANSMITTING_FROM_POWEROFF(void);
 void ADF7030_RECEIVING_FROM_POWEROFF(void);
 void SCAN_RECEIVE_PACKET(void);
 u32 ConfigurationLen(void);
-
+void ADF7030_TRANSMITTING_FROM_POWEROFF_Register(void);
 
 
 

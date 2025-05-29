@@ -17,7 +17,7 @@
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
   * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
-  ******************************************************************************  
+  ******************************************************************************
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
@@ -39,7 +39,7 @@
         devices, you can define the device in your toolchain compiler preprocessor.
 
  - Low density STM8L15x devices are STM8L151C3, STM8L151K3, STM8L151G3, STM8L151F3,
-   STM8L151C2, STM8L151K2, STM8L151G2 and STM8L151F2 microcontrollers where the 
+   STM8L151C2, STM8L151K2, STM8L151G2 and STM8L151F2 microcontrollers where the
    Flash memory density ranges between 4 and 8 Kbytes.
  - Medium density STM8L15x devices are STM8L151C4, STM8L151C6, STM8L152C4,
    STM8L152C6, STM8L151K4, STM8L151K6, STM8L152K4, STM8L152K6, STM8L151G4,
@@ -49,7 +49,7 @@
   the Flash memory density is fixed and equal to 32 Kbytes and a wider range of
   peripheral than the medium density devices.
  - High density STM8L15x devices are STM8L151x8, STM8L152x8, STM8L162R8 and STM8L162M8
-   microcontrollers where the Flash memory density is fixed and equal to 64 Kbytes with 
+   microcontrollers where the Flash memory density is fixed and equal to 64 Kbytes with
    the same peripheral set than Medium Density Plus devices.
 
  */
@@ -119,7 +119,7 @@
  #else /* STM8L15X_HD */
    /*!< Used with memory Models for code higher than 64K */
   #define MEMCPY fmemcpy
- #endif /* STM8L15X_MD or STM8L15X_MDP */ 
+ #endif /* STM8L15X_MD or STM8L15X_MDP */
 #else /*_IAR_*/
  #define FAR  __far
  #define NEAR __near
@@ -133,7 +133,7 @@
   */
 #define __CONST  CONST
 
-#if defined (STM8L15X_MD) || defined (STM8L15X_MDP) || defined (STM8L15X_LD) 
+#if defined (STM8L15X_MD) || defined (STM8L15X_MDP) || defined (STM8L15X_LD)
 /*!< Used with memory Models for code smaller than 64K */
  #define PointerAttr NEAR
 #else /* STM8L15X_HD */
@@ -154,15 +154,15 @@
  #else /*_IAR_*/
   #define IN_RAM(a) __ramfunc a
  #endif /* _COSMIC_ */
-#else 
+#else
   #define IN_RAM(a) a
 #endif /* RAM_EXECUTION */
 
 /*!< [31:16] STM8L15X Standard Peripheral Library main version */
-#define __STM8L15X_STDPERIPH_VERSION_MAIN   ((uint8_t)0x01) /*!< [31:24] main version */                                  
+#define __STM8L15X_STDPERIPH_VERSION_MAIN   ((uint8_t)0x01) /*!< [31:24] main version */
 #define __STM8L15X_STDPERIPH_VERSION_SUB1   ((uint8_t)0x05) /*!< [23:16] sub1 version */
 #define __STM8L15X_STDPERIPH_VERSION_SUB2   ((uint8_t)0x00) /*!< [15:8]  sub2 version */
-#define __STM8L15X_STDPERIPH_VERSION_RC     ((uint8_t)0x00) /*!< [7:0]  release candidate */ 
+#define __STM8L15X_STDPERIPH_VERSION_RC     ((uint8_t)0x00) /*!< [7:0]  release candidate */
 #define __STM8L15X_STDPERIPH_VERSION       ( (__STM8L15X_STDPERIPH_VERSION_MAIN << 24)\
                                           |(__STM8L15X_STDPERIPH_VERSION_SUB1 << 16)\
                                           |(__STM8L15X_STDPERIPH_VERSION_SUB2 << 8)\
@@ -2861,7 +2861,7 @@ AES_TypeDef;
 #define CFG                         ((CFG_TypeDef *) CFG_BASE)
 #define OPT                         ((OPT_TypeDef *) OPT_BASE)
 
-#ifdef USE_STDPERIPH_DRIVER 
+#ifdef USE_STDPERIPH_DRIVER
  #include "stm8l15x_conf.h"
 #endif
 
@@ -2922,7 +2922,7 @@ AES_TypeDef;
  __interrupt void (a)( void )
  #define INTERRUPT_HANDLER_TRAP(a) \
  _Pragma( VECTOR_ID( 1 ) ) \
- __interrupt void (a) (void)  
+ __interrupt void (a) (void)
 #endif /* _IAR_ */
 
 /*============================== Interrupt Handler declaration ========================*/
@@ -2931,7 +2931,7 @@ AES_TypeDef;
 #elif defined(_IAR_)
  #define INTERRUPT __interrupt
 #endif /* _COSMIC_ */
- 
+
 /*============================== Handling bits ====================================*/
 /*-----------------------------------------------------------------------------
 Method : I

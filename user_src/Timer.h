@@ -15,5 +15,9 @@ extern u16 StateReadTimer;
 //============================================ Timer 4
 void TIM4_Init(void);
 void TIM4_UPD_OVF(void);
+void TIM2_UPD_OVF(void);
+void TIM2_Init(void);
+void BEEP_TIM2_ON(void);
+void BEEP_TIM2_OFF(void);
 
 #endif
