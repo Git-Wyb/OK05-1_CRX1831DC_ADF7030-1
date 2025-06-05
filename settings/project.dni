@@ -1,6 +1,6 @@
 [DebugChecksum]
 <<<<<<< HEAD
-Checksum=-488636172
+Checksum=1096302822
 =======
 Checksum=773928336
 >>>>>>> f03119bb9d9418453f7da9e2e3549a267f3e0d0b
@@ -84,6 +84,7 @@ Fmt9={W}1:TRX_IRQ1_TYPE	3	0
 Fmt10={W}42:ADF7030_RESIGER_VALUE_READ	4	0
 Fmt11={W}42:Tx_Rx_mode	4	0
 Fmt12={W}42:cache	4	0
+Fmt13={W}42:ssr	3	0
 [DataSample]
 LogEnabled=0
 GraphEnabled=0

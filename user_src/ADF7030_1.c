@@ -1344,5 +1344,86 @@ void Select_TX_frequency(void)
 
 	}
 
+void APP_TX_PACKET_Register(void)
+{
+    char r_rssi;
 
+    if(Flag_Register_tx == 1 && FLAG_APP_TX == 0)
+    {
+        Flag_Register_tx = 0;
+        Last_Uart_Struct_DATA_Packet_Contro = Uart_Struct_DATA_Packet_Contro;
+        Last_Uart_Struct_DATA_Packet_Contro.Fno_Type.UN.type = 1;
+        Last_Uart_Struct_DATA_Packet_Contro.data[0].uc[0] = 0xAA;
+        Last_Uart_Struct_DATA_Packet_Contro.data[0].uc[1] = Register_state;
+        r_rssi = RAM_RSSI_AVG/128;
+        r_rssi = -r_rssi;
+        if(r_rssi >= 127) r_rssi = 127;
+        //r_rssi = r_rssi | 0x80;
+        Last_Uart_Struct_DATA_Packet_Contro.data[1].uc[0] = r_rssi;
+        DEF_APP_TX_freq = 3;
+        Flag_tx_en = 1;
+        FLAG_APP_RX = 0;
+        APP_TX_freq = 0;
+        TX_Scan_step = 1;
+        First_TX_Scan = 0;
+
+        PROFILE_CH_FREQ_32bit_200002EC = 429300000;
+        PROFILE_RADIO_AFC_CFG1_32bit_2000031C = 0x0005005B;
+        PROFILE_RADIO_DATA_RATE_32bit_200002FC = 0x64000030;
+        Radio_Date_Type=2;
+        ADF7030Cfg_pointer=ADF7030Cfg_4dot8k;
+        ADF7030Init();
+    }
+    if(Flag_tx_en == 1)
+	  {
+	       if(TX_Scan_step==1)
+           {
+               TX_Scan_step=2;//Select_TX_frequency();
+               Time_APP_RXstart = 1000;
+           }
+		   if(TX_Scan_step==2)
+		   {
+				if(APP_TX_freq==0)
+				{
+				    Receiver_LED_TX = 1;
+                    if(ID_Receiver_Login == 0) ID_Receiver_Login = 12345678;
+					TX_DataLoad_HighSpeed(ID_Receiver_Login,Last_Uart_Struct_DATA_Packet_Contro, &CONST_TXPACKET_DATA_20000AF0[0]);
+                    ADF7030_TRANSMITTING_FROM_POWEROFF();
+					Time_APP_blank_TX=2;
+					APP_TX_freq=1; //1
+				}
+				else if((APP_TX_freq < DEF_APP_TX_freq)&&(ADF7030_GPIO3 == 0)&&(Time_APP_blank_TX==0))
+				{
+                    ADF7030_TRANSMITTING_FROM_POWEROFF();
+                    Time_APP_blank_TX=2;
+                    APP_TX_freq++;
+				}
+				else if((APP_TX_freq==DEF_APP_TX_freq)&&(ADF7030_GPIO3 == 0)&&(Time_APP_blank_TX==0))
+				{
+					APP_TX_freq++;
+				   FLAG_APP_RXstart=1;
+				   Flag_tx_en = 0;
+				   Time_APP_RXstart=1;
+				   Receiver_LED_TX = 0;
+				   FLAG_APP_TX_once=0;
+				}
+                else if(Time_APP_RXstart == 0)
+                {
+                   FLAG_APP_RXstart=1;
+				   Flag_tx_en=0;
+				   Time_APP_RXstart=1;
+				   Receiver_LED_TX = 0;
+				   FLAG_APP_TX_once=0;
+                }
+		   }
+	  }
+	  if((FLAG_APP_RXstart==1)&&(Time_APP_RXstart==0)&&(FLAG_APP_TX_fromUART_err_read==0))
+	  {
+            FLAG_APP_RXstart=0;
+            TIMER18ms=0;
+            FLAG_APP_RX=1;
+
+            ADF7030Init();	   //��Ƶ��ʼ��
+	  }
+}
 

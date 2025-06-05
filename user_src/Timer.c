@@ -47,9 +47,9 @@ void TIM4_UPD_OVF(void)
     if (U1AckTimer)
         U1AckTimer--;
     if (Time_APP_RXstart)
-      --Time_APP_RXstart;	
+      --Time_APP_RXstart;
     if(Time_APP_blank_TX)
-       --Time_APP_blank_TX;  	
+       --Time_APP_blank_TX;
     if (Flag_RSSI_Read_Timer)
         Flag_RSSI_Read_Timer--;
     if (X_ERRTimer)

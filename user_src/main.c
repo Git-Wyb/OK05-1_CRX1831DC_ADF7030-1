@@ -95,7 +95,7 @@ void main(void)
         }
         TranmissionACK();
         //        READ_RSSI_avg();
-
+        APP_TX_PACKET_Register();
         if (FG_Receiver_LED_RX == 1)
             Receiver_LED_RX = 1;
         else if (FG_Receiver_LED_RX == 0)
