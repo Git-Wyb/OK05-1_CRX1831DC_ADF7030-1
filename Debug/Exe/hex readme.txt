@@ -9,3 +9,7 @@ OK05-1_CRX1831DC (STM8L151G6U6) Ver1.07
 
 2025.06.04  OK05-1_ Wireless(ADF7030-1)_Soft Ver1.02-beta0.hex
 V1.02测试版，进入登录模式后429.300MHz发送数据
+
+
+2025.07.18  OK05-1_ Wireless(ADF7030-1)_Soft Ver1.02   
+软件没有变动，Ver1.02-beta0文化已经承认，正式命名为Ver1.02，2025.07.18 发行到工厂
